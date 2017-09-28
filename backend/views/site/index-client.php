@@ -100,7 +100,7 @@ use backend\models\Kontrak;
 								<input id="task-1" type="checkbox" data-checkbox="icheckbox_square-blue" />
 								<label for="task-1"></label>
 							</span>
-							<span class="todo-task"><?= $models->title_event; ?></span>
+							<span class="todo-task"><?= $models->kontrak->nama_event; ?></span>
 							<div class="todo-date clearfix">
 								<div class="completed-date"></div>
 								<div class="due-date">Due on <span class="due-date-span"><?= date("d M Y",strtotime($models->kontrak->tanggal_mulai)).' - ', date("d M Y",strtotime($models->kontrak->tanggal_akhir))?></span></div>

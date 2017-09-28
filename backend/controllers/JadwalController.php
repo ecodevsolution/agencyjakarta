@@ -211,7 +211,7 @@ class JadwalController extends Controller
 			$connection = \Yii::$app->db;
 			$sql = $connection->createCommand("select u.id, u.first_name from timeline_apply t join user u on t.idspg = u.id 
 										 join timeline tm on t.idtimeline = tm.idtimeline 
-										 join kontrak k on tm.idkontrak = k.idkontrak where t.counter  = 4 and k.idkontrak = '1500000001'");
+										 join kontrak k on tm.idkontrak = k.idkontrak where t.counter  = 4 and k.idkontrak = '".$idkontrak."'");
 			$models = $sql->queryAll();
             return $this->render('create', [
                 'model' => $model,

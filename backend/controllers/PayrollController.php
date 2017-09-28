@@ -14,14 +14,14 @@ class PayrollController extends \yii\web\Controller
     {
 		$model = new DetailAbsent();
 		
-		if(isset($_POST['bulan'])){
+		if(isset($_POST['start'])){
 			include "inc/fungsi_bulan.php";
 			$session = Yii::$app->session;
-			$session->setFlash('periode', 'Periode from '.tampil_bulan($_POST['bulan']).' '.$_POST['tgl'].' ');
+			$session->setFlash('periode', 'Periode from '.tampil_bulan(date('m'),strtotime($_POST['start'])).' '.date('m'),strtotime($_POST['end']).' ');
 			
 			$connection = \Yii::$app->db;
-			$sql = $connection->createCommand("select t.title_event, k.tanggal_mulai, k.tanggal_akhir, j.idjadwal from jadwal 
-												j join detail_jadwal dt on j.idjadwal = dt.idjadwal join kontrak k on j.idkontrak =
+			$sql = $connection->createCommand("select k.nama_event, k.tanggal_mulai, k.tanggal_akhir, j.idjadwal from jadwal 
+												j join detail_jadwal dt on j.idjadwal = dt.idjadwal join timeline tl on tl.idtimeline = j.idtimeline JOIN kontrak k on tl.idkontrak =
 												k.idkontrak join timeline t on k.idkontrak = t.idkontrak group by j.idjadwal");
 			$models = $sql->queryAll();
 			
@@ -69,9 +69,12 @@ class PayrollController extends \yii\web\Controller
 			$model = DetailJadwal::find()
 					->where(['iduser'=>$check])
 					->andWhere(['idjadwal'=>$id])
-					->one();
-			$model->flag = 2;
-			$model->save();
+					->All();
+			foreach($model as $models):
+				$models->flag = 2;
+				$models->save();
+			endforeach;
+
 			$present = $_POST['present'][$key];
 			$absents = $_POST['absents'][$key];
 			$sub = $_POST['sub'][$key];
@@ -92,6 +95,8 @@ class PayrollController extends \yii\web\Controller
 			
 			//var_dump($jml);
 			endforeach;
+			$url = "?r=payroll/index";
+			return Yii::$app->getResponse()->redirect($url);
 			//$connection = \Yii::$app->db;
 			//$sql = $connection->createCommand("select * from detail_absent dt join absent a on dt.idabsent = a.idabsent 
 			//								   join jadwal j on a.idjadwal = j.idjadwal 

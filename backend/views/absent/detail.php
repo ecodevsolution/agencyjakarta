@@ -32,9 +32,10 @@ $this->params['breadcrumbs'][] = $this->title;
 						</thead>
 						<tbody>
 							<?php
-								
+								if($models){
 							$x = 0;
 								foreach($models as $model):
+									
 								$x++;
 								
 								$jml = DetailAbsent::find()
@@ -87,6 +88,7 @@ $this->params['breadcrumbs'][] = $this->title;
 					</table>
 					
 					<p class="text-danger"><?= $text ?> </p>
+					
                 </div>
               </div>
             </div>
@@ -102,4 +104,5 @@ $this->params['breadcrumbs'][] = $this->title;
 				</div>
 		</div>
 			<?php  } ?>
+		<?php } ?>
 	<?php ActiveForm::end(); ?>

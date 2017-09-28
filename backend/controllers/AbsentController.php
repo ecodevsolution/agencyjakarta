@@ -33,11 +33,10 @@ class AbsentController extends \yii\web\Controller
     }
 	 public function actionDetailAbsent($id)
     {
-        $model = DetailJadwal::find()
-				->joinWith(['jadwal'])				
-				->where(['idkontrak'=>$id])
-				->groupBy('pembagian_kerja')
-				->all();
+        
+		$connection = \Yii::$app->db;
+		$sql = $connection->createCommand("SELECT a.idshift, a.idjadwal FROM detail_jadwal a JOIN jadwal b ON a.idjadwal = b.idjadwal JOIN timeline c ON b.idtimeline = c.idtimeline JOIN kontrak d ON c.idkontrak = d.idkontrak where d.idkontrak = '".$id."' GROUP BY a.idshift, a.idjadwal");
+		$model = $sql->queryAll();
 		return $this->render('shift', [
             'model' => $model,
         ]);
@@ -120,10 +119,12 @@ class AbsentController extends \yii\web\Controller
 			]);
 				
 		}else{
+			$date = date('Y-m-d');
 			$models = DetailJadwal::find()
 					->joinWith(['userForm'])				
-					->where(['idjadwal'=>$id])
-					->Andwhere(['pembagian_kerja'=>$shift])
+					->where(['idjadwal'=>$id])					
+					->Andwhere(['idshift'=>$shift])
+					->AndWhere(['tanggal'=>$date])
 					->all();
 			return $this->render('detail',[
 				'models'=>$models,

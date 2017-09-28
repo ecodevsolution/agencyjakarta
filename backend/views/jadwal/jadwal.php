@@ -124,7 +124,7 @@
                                     <div class="col-md-6">
                                         <label class="control-label">Event Name</label>
                                         <?= $form->field($model, 'idtimeline')->dropDownList(
-                                                ArrayHelper::map(Timeline::find()->JoinWith('kontrak')->where(['status_kontrak'=>'P'])->all(),'idtimeline', 'kontrak.nama_event'),
+                                                ArrayHelper::map(Timeline::find()->JoinWith('kontrak')->where(['<>','status_kontrak','E'])->all(),'idtimeline', 'kontrak.nama_event'),
                                                 ['prompt'=>'- Choose -'])->label(false);				 
                                         ?>                                        
                                     </div>

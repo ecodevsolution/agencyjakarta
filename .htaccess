@@ -1,0 +1,7 @@
+
+RewriteEngine on
+
+RewriteCond %{HTTP_HOST} ^portal\.agencyjakarta\.co\.id$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.portal\.agencyjakarta\.co\.id$
+RewriteRule ^/?$ "https\:\/\/portal\.agencyjakarta\.co\.id\/" [R=301,L]
+

@@ -84,8 +84,24 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
 		</div>
 		<div class="col-md-4 panel">
+				
+				<?php
+					$total = 0;
+					$connection = \Yii::$app->db;
+					$sql = $connection->createCommand("SELECT count(b.tanggal) /2 * e.price_flat JUMLAH FROM detail_absent a JOIN absent b On a.idabsent = b.idabsent JOIN jadwal c oN b.idjadwal = c.idjadwal JOIN `user` d ON a.iduser = d.id JOIN user_category e ON d.idcategory = e.idcategory where c.idjadwal = ".$model['idjadwal']." GROUP BY a.iduser");
+					$jml = $sql->queryAll();
+
+					foreach($jml as $jmls):
+
+						$total += $jmls['JUMLAH'];
+					endforeach;
+				?>
+				<br/>
+				<br/>
 				<div class="form-group text-right">
-					<input type="text" class="form-control" name="nominal">
+					<input type="text" class="form-control" readonly  value = "<?= number_format($total,2,".",".") ?>">
+					<input type="hidden" class="form-control" name="nominal" value = "<?= $total ?>">
+					<p></p>
 					<?= Html::submitButton('Submit', ['class' =>'btn btn-primary']) ?>
 				</div>
 		</div>

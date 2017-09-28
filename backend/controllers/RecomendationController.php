@@ -71,7 +71,9 @@ class RecomendationController extends Controller
 												    timeline tm on t.idtimeline = tm.idtimeline join 
 													user u on t.idspg = u.id join 
 													city c on u.idcity = c.idcity join
-													face f on u.face = f.idface WHERE t.status <> 1 AND t.idtimeline ='".$id."'");
+                                                    face f on u.face = f.idface WHERE t.idtimeline ='".$id."'");
+                                                    
+                                                    //WHERE t.status = 1 AND
 		$model = $sql->queryAll();
         return $this->render('detail', [
             'model' => $model,
@@ -87,7 +89,7 @@ class RecomendationController extends Controller
 				->One();
 		$model->status = $status;
 		$model->save(false);
-		var_dump($model);
+		//var_dump($model);
 		$models = UserForm::findOne($s);
 		$models->active_work = $val;
 		$models->save();

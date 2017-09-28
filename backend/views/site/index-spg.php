@@ -153,7 +153,7 @@ return Yii::$app->getResponse()->redirect($url);
 										->all();
 										foreach($apply as $applies):
 									?>
-									<?= Html::a('Cancel', ['//timeline-apply/cancel', 'id' => $applies->idtimelineapply],['class'=>'f fa fa-times fa-2x']); ?><span class="pull-right badge badge-dark"><?= $countApp; ?></span>
+									<?= Html::a('Cancel', ['//timeline-apply/cancel', 'id' => $applies->idtimeline, 'usr'=>Yii::$app->user->identity->id],['class'=>'f fa fa-times fa-2x']); ?><span class="pull-right badge badge-dark"><?= $countApp; ?></span>
 										
 							<?php endforeach; } }?>
 						</div>

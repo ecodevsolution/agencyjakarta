@@ -54,11 +54,14 @@ class RecomendationClientController extends Controller
 	
     public function actionDetailApply($id)
     {
-		$event = Timeline::findOne(['idtimeline'=>$id]);
+        $event = Timeline::find()
+                ->joinWith(['kontrak'])
+                ->Where(['idtimeline'=>$id])
+                ->One();
 		$connection = \Yii::$app->db;
-		$sql = $connection->createCommand("select u.id, u.first_name, c.city_name, u.email, u.high, f.face, t.status, t.idtimelineapply,t.counter  from timeline_apply t join timeline tm on t.idtimeline = tm.idtimeline join 
+		$sql = $connection->createCommand("select u.id, u.first_name, c.city_name, u.email, u.high, f.face, t.status,t.counter, t.idtimeline  from timeline_apply t join timeline tm on t.idtimeline = tm.idtimeline join 
 				user u on t.idspg = u.id join city c on u.idcity = c.idcity join
-				face f on u.face = f.idface where counter <> 1 and t.idtimeline = '".$id."'");
+				face f on u.face = f.idface where t.idtimeline = '".$id."'");
 		$model = $sql->queryAll();
 		
         return $this->render('detail', [
@@ -72,7 +75,7 @@ class RecomendationClientController extends Controller
 		$model = TimelineApply::findOne($id);
 		
 		//var_dump($id);
-		$model->counter = $status;
+		$model->status = $status;
 		//var_dump($model->counter);
 		$model->save();
 		//var_dump($model);
@@ -80,14 +83,26 @@ class RecomendationClientController extends Controller
 	}
 	
 	public function actionApprove($id, $status, $s, $val){
+        
+        $model = TimelineApply::find()
+        ->where(['idtimeline'=>$id])
+        ->andWhere(['idspg'=>$s])
+        ->One();
+
+        $model->status = $status;
+        $model->save(false);
+        //var_dump($model);
+        $models = UserForm::findOne($s);
+        $models->active_work = $val;
+        $models->save();
+
+		// $model = TimelineApply::findOne($id);
+		// $model->status = $status;
+		// $model->save();
 		
-		$model = TimelineApply::findOne($id);
-		$model->counter = $status;
-		$model->save();
-		
-		$models = UserForm::findOne($s);
-		$models->active_work = $val;
-		$models->save();
+		// $models = UserForm::findOne($s);
+		// $models->active_work = $val;
+		// $models->save();
 		
 		return $this->redirect(['/recomendation-client/detail-apply', 'id' => $model->idtimeline]);
 	}

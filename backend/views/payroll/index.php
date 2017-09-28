@@ -60,7 +60,7 @@ $this->registerJsFile("https://code.jquery.com/ui/1.12.1/jquery-ui.js",
 						
 						<div class="form-group">
 							
-							<button type="button" class="btn btn-success btn-transparent pull-right">Search</button>
+							<button type="submit" class="btn btn-success btn-transparent pull-right">Search</button>
 						</div>
 					</div>                                        
 				</div>

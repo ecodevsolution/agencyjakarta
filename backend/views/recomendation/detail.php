@@ -50,26 +50,28 @@ $this->params['breadcrumbs'][] = $this->title;
 									font-size:14px;
 								}
 							");
-						if($models['status'] == 1){
-							echo"<td><span class='fa fa-exclamation-triangle fa-2x w'></span></td>";
-						}else{
-							if($models['status']  == 2){
+						// if($models['status'] == 1){
+						// 	echo"<td><span class='fa fa-exclamation-triangle fa-2x w'></span></td>";
+						// }else{
+							if($models['status']  == 1){
 						?>
 							<td><?= Html::a('', ['//recomendation/approve', 'id' => $models['idtimeline'], 'status'=>4, 's'=>$models['id'], 'val'=>1],['class'=>'fa fa-check-circle-o']); ?> | 
 								<?= Html::a('', ['//recomendation/approve', 'id' => $models['idtimeline'], 'status'=>5,'s'=>$models['id'], 'val'=>0],['class'=>'fa fa-times-circle f']); ?></td>
 							<?php }else{
 								if($models['status'] == 4){
 									echo"<td><span class='fa fa-check-circle-o fa-2x'></span> |
-											<a class='fa fa-reply' href='?r=recomendation%2Fapprove&amp;id=".$models['idtimeline']."&amp;status=2&amp;s=".$models['id']."&amp;val=0' title='undo process'></a></td>";
+											<a class='fa fa-reply' href='?r=recomendation%2Fapprove&amp;id=".$models['idtimeline']."&amp;status=1&amp;s=".$models['id']."&amp;val=0' title='undo process'></a></td>";
 									
 								}else if($models['status'] == 5 || $models['status'] == 3){
 									echo"<td><span class='fa fa-times-circle fa-2x f'></span> | 
-									<a class='fa fa-reply' href='?r=recomendation%2Fapprove&amp;id=".$models['idtimeline']."&amp;status=2&amp;s=".$models['id']."&amp;val=0' title='undo process'></a></td>";
+									<a class='fa fa-reply' href='?r=recomendation%2Fapprove&amp;id=".$models['idtimeline']."&amp;status=1&amp;s=".$models['id']."&amp;val=0' title='undo process'></a></td>";
+								}	else if($models['status'] == 6){
+									echo"<td><span class='fa fa-check-circle-o'> APPROVED</span></td>";
 								}else{
 									echo"<td><span class='fa fa-exclamation-triangle fa-2x w'> Waiting Approval</span></td>";
 								}
 							}
-						}
+						//}
 						?>
                       </tr>
 						<?php endforeach; ?>
