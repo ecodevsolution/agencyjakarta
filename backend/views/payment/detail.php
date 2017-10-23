@@ -86,12 +86,12 @@
 								<div class="text-primary">
 									<p><strong><?= $modells['first_name'].' '.$modells['Last_name']?></strong></p>
 								</div>
-								<p class="width-100p"><small>Sales Promotion girls untuk bekerja pada event tersebut. (<?= $modells['jumlah_pramuniaga'] ;?> Orang)</small></p>
+								<p class="width-100p"><small>Sales Promotion girls untuk bekerja pada event tersebut. (<?= $modells['jml_spg'] ;?> Orang)</small></p>
 								</td>
 								<td>
-								<p class="text-right cost"><font style="font-size:12px"><?= format_rupiah($modells['budget']- 100000)?> IDR</font></p>
+								<p class="text-right cost"><font style="font-size:12px"><?= format_rupiah($modells['total_harga']- 100000)?> IDR</font></p>
 								</td>
-								<td class="text-right price"><font style="font-size:12px"><?= format_rupiah(($modells['budget']- 100000)* $modells['duration'] * $modells['jumlah_pramuniaga']) ?> IDR</font></td>
+								<td class="text-right price"><font style="font-size:12px"><?= format_rupiah(($modells['total_harga']- 100000)* $modells['duration'] * $modells['jml_spg']) ?> IDR</font></td>
 							</tr>
 							<?php  endforeach; ?>
 							
@@ -100,8 +100,9 @@
 								$sqll = $connection->createCommand("select IFNULL(tl.harga_tl * (datediff(k.tanggal_akhir, k.tanggal_mulai)+1),0) as teamleadder , IFNULL(tl.harga_tl,0) as harga
 																 from detail_jadwal dt join 
 																 jadwal j on dt.idjadwal = j.idjadwal join 
-																 user u on dt.iduser = u.id join
-																 kontrak k on k.idkontrak = j.idkontrak join
+																 user u on dt.iduser = u.id join																 
+ 																 timeline t on j.idtimeline = t.idtimeline join
+ 																 kontrak k on k.idkontrak = t.idkontrak join
 																 teamleader tl on tl.idtl = k.idtl where k.idkontrak = '".$kode."'");
 								$tl = $sqll->queryOne();
 							?>
@@ -127,7 +128,8 @@
 																 from detail_jadwal dt join 
 																 jadwal j on dt.idjadwal = j.idjadwal join 
 																 user u on dt.iduser = u.id join
-																 kontrak k on k.idkontrak = j.idkontrak join
+																 timeline t on j.idtimeline = t.idtimeline join
+																 kontrak k on k.idkontrak = t.idkontrak join
 																 seragam unif on k.idseragam = unif.idseragam
 																 where k.idkontrak = '".$kode."'");
 								$srgm = $sql->queryOne();
@@ -161,7 +163,7 @@
 								<td>
 								<p class="text-right cost"><font style="font-size:12px">100.000 IDR</font></p>
 								</td>
-								<td class="text-right price"><font style="font-size:12px"><b><?= format_rupiah($modells['fee'] * $modells['duration']  * $x * $modells['jumlah_pramuniaga'])?> IDR</font></td>
+								<td class="text-right price"><font style="font-size:12px"><b><?= format_rupiah($modells['fee'] * $modells['duration']  * $x * $modells['jml_spg'])?> IDR</font></td>
 							</tr>
 							<tr>
 								<td class="delete-wpr">
@@ -175,7 +177,7 @@
 								
 								<?php
 					
-									$total1 = (($modells['budget']- 100000)* $modells['duration'] * $x * $modells['jumlah_pramuniaga']) + $tl['teamleadder'] + $srgm['seragam'] + ($modells['fee'] * $modells['duration']  * $x * $modells['jumlah_pramuniaga']);
+									$total1 = (($modells['total_harga']- 100000)* $modells['duration'] * $x * $modells['jml_spg']) + $tl['teamleadder'] + $srgm['seragam'] + ($modells['fee'] * $modells['duration']  * $x * $modells['jml_spg']);
 								?>
 								</td>
 								<td class="text-right" id="total"><font style="font-size:12px"><b><?= format_rupiah($total1) ?> IDR</b></font></td>

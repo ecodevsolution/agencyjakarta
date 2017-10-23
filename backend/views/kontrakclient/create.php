@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $model backend\models\Kontrak */
 
 $this->title = 'Create Kontrak';
-$this->params['breadcrumbs'][] = ['label' => 'Kontraks', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Kontrak', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="kontrak-create">
@@ -16,6 +16,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
+		'detail' => $detail,
+
     ]) ?>
 
 </div>

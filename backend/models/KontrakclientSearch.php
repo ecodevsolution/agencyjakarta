@@ -15,13 +15,21 @@ class KontrakclientSearch extends Kontrak
     /**
      * @inheritdoc
      */
-    public function rules()
-    {
-        return [
-            [['idkontrak', 'idclient', 'perwakilan', 'email', 'telp', 'tanggal_mulai', 'tanggal_akhir', 'jam_mulai', 'jam_akhir', 'lokasi', 'alamat', 'status_rekomendasi', 'status_kontrak', 'status_pembayaran', 'tanggal'], 'safe'],
-            [['durasi_kontrak', 'jumlah_pramuniaga', 'pramuniaga_rekomendasi', 'budget'], 'integer'],
-        ];
-    }
+     public function rules()
+     {
+         return [
+             [['idkontrak', 'idclient', 'perwakilan', 'nama_event', 'email', 'telp', 'tanggal_mulai', 'tanggal_akhir', 'jam_mulai', 'jam_akhir', 'durasi_kontrak', 'lokasi', 'alamat', 'jml_spg', 'description_spg', 'total_harga', 'status_kontrak', 'status_pembayaran', 'tanggal'], 'required'],
+             [['idclient', 'idseragam', 'idtl', 'durasi_kontrak', 'jml_spg'], 'integer'],
+             [['tanggal_mulai', 'tanggal_akhir', 'tanggal'], 'safe'],
+             [['alamat', 'description_spg', 'status_kontrak', 'status_pembayaran'], 'string'],
+             [['total_harga'], 'number'],
+             [['idkontrak'], 'string', 'max' => 10],
+             [['perwakilan', 'nama_event', 'email'], 'string', 'max' => 50],
+             [['telp'], 'string', 'max' => 14],
+             [['jam_mulai', 'jam_akhir'], 'string', 'max' => 20],
+             [['lokasi'], 'string', 'max' => 255],
+         ];
+     }
 
     /**
      * @inheritdoc
@@ -61,9 +69,9 @@ class KontrakclientSearch extends Kontrak
             'jam_mulai' => $this->jam_mulai,
             'jam_akhir' => $this->jam_akhir,
             'durasi_kontrak' => $this->durasi_kontrak,
-            'jumlah_pramuniaga' => $this->jumlah_pramuniaga,
+            'jml_spg' => $this->jml_spg,
             'pramuniaga_rekomendasi' => $this->pramuniaga_rekomendasi,
-            'budget' => $this->budget,
+            'total_harga' => $this->total_harga,
             'tanggal' => $this->tanggal,
         ]);
 

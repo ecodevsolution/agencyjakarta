@@ -35,12 +35,12 @@
                         $x = 0;
                         	foreach($model as $models):							
                         	$x++;
-                        	$dp = $models->kontrak->budget * 50 / 100;
+                        	$dp = $models->kontrak->total_harga * 50 / 100;
                         	
                         ?>
                     <tr>
                         <td><?= $x?></td>
-                        <td><?= Html::a($models->title_event,['detail','id'=>$models->idkontrak]); ?></td>
+                        <td><?= Html::a($models->kontrak->nama_event,['detail','id'=>$models->idkontrak]); ?></td>
                         <?php
                             $status = Payment::find()
                             		->where(['idkontrak'=>$models->idkontrak])

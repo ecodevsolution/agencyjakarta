@@ -42,13 +42,13 @@ function format_rupiah($angka){
 							$x = 0;
 								foreach($model as $models):							
 								$x++;
-								$dp = $models->kontrak->budget * 50 / 100;
+								$dp = $models->kontrak->total_harga * 50 / 100;
 								
 							?>
 							<tr>
 								<td><?= $x?></td>
-								<td><?= Html::a($models->title_event,['detail-payment','id'=>$models->idkontrak]); ?></td>
-								<td><?= format_rupiah($models->kontrak->budget); ?></td>
+								<td><?= Html::a($models->kontrak->nama_event,['detail-payment','id'=>$models->idkontrak]); ?></td>
+								<td><?= format_rupiah($models->kontrak->total_harga); ?></td>
 								<td><?= format_rupiah($dp); ?></td>
 								<?php
 									$status = Payment::find()

@@ -60,7 +60,7 @@ class PaymentController extends \yii\web\Controller
 		$query = $connection->createCommand("
 											select u.first_name, u.Last_name, 
 											datediff(k.tanggal_akhir, k.tanggal_mulai)+1 as duration , 
-											100000 as fee, k.jumlah_pramuniaga, k.budget, (k.budget * (datediff(k.tanggal_akhir, 
+											100000 as fee, k.jml_spg, k.total_harga, (k.total_harga * (datediff(k.tanggal_akhir, 
 											k.tanggal_mulai)+1)- 100000 ) as subtotal from user u join kontrak k 
 											on u.id = k.idclient where k.idkontrak = '".$id."'		
 										");
@@ -366,7 +366,7 @@ class PaymentController extends \yii\web\Controller
 			->orderBy(['idpayment'=>SORT_DESC])
 			->one();
 		if($pay == 0){
-			$nominal = $kontrak->budget * $kontrak->jumlah_pramuniaga;
+			$nominal = $kontrak->total_harga * $kontrak->jml_spg;
 			$left = $nominal - $model->nominal;
 		}else{
 			$nominal = $payment->left;
