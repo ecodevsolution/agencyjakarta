@@ -9,7 +9,7 @@
      AppAsset::register($this);
     date_default_timezone_set('Asia/Jakarta');
     
-    if (Yii::$app->controller->action->id === 'login') { 
+    if (Yii::$app->controller->action->id === 'login' || Yii::$app->controller->action->id === 'forgot-password') { 
     /**
      * Do not use this code in your template. Remove it. 
      * Instead, use the code  $this->layout = '//main-login'; in your controller.

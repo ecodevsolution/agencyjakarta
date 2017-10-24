@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						?>
                       <tr>
 					   <td><?= $x ?></td>
-                        <td><?= $models->title_event ?></td>
+                        <td><?= $models->kontrak->nama_event ?></td>
                         <td><?= Html::a('', ['/mail/detail-send','id'=>$models->idtimeline], ['class'=>'fa fa-pencil-square-o']) ?></td>
 						<td><?= $models->date_created?></td>
                       </tr>

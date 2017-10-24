@@ -6,6 +6,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use common\models\LoginForm;
 use yii\filters\VerbFilter;
+use backend\models\UserForm;
 /**
  * Site controller
  */
@@ -21,7 +22,7 @@ class SiteController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['login', 'error'],
+                        'actions' => ['login', 'error','forgot-password'],
                         'allow' => true,
                     ],
                     [
@@ -76,13 +77,55 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+            return $this->goHome();
         } else {
             return $this->render('login', [
                 'model' => $model,
             ]);
         }
     }
+	public function actionForgotPassword(){
+		
+		include "inc/fungsi_email.php";
+		$model = new LoginForm();
+		if ($model->load(Yii::$app->request->post())){
+			$search = UserForm::find()
+					  ->where(['username'=>$model->username])
+					  ->One();
+			
+			if($search){
+				$CHAR = 'ABCDEFGHIJKLzyxwv123456789!?`*^%$#@()~';
+				$string = '';
+				for($i = 0 ; $i < 10 ; $i++){
+					$pos = rand(0, strlen($CHAR)-1);
+					$string .= $CHAR{$pos};
+				}
+			
+				EmailForgotPasssword($search->email, $search->first_name, $search->Last_name, $model->username, $string );
+				$search->password_reset_token = $search->password_hash;
+				$search->password_hash = Yii::$app->security->generatePasswordHash($string);
+				$search->save(false);
+				$msg = "Please Check Your Email !";
+				return $this->render('forgot', [
+					'model' => $model,
+					'msg'  => $msg,
+				]);
+			}else{
+				$err = "Username not Exist !";
+				return $this->render('forgot', [
+					'model' => $model,
+					'err' => $err,
+				]);
+			}
+			
+		}else {
+			
+			return $this->render('forgot', [
+                'model' => $model,
+            ]);
+		}
+	
+	}
 	public function actionError(){
 		
 		return $this->render('error');

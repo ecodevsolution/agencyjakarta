@@ -59,11 +59,13 @@ $session = Yii::$app->session;
 					<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
 					<?= $field; ?>
 				</div>
+				
+				
 				<?php } ?>
                 <?php $form = ActiveForm::begin(['id' => 'login-form', 'enableClientValidation' => false]); ?>
                     <h3><strong>Sign in</strong> to your account</h3>
 					
-       
+
                     <div class="append-icon">
                         <?= $form
 							->field($model, 'username')
@@ -79,7 +81,7 @@ $session = Yii::$app->session;
                         <i class="icon-lock"></i>
                     </div>
 					 <?= Html::submitButton('Sign in', ['class' => 'btn btn-lg btn-dark btn-rounded ladda-button', 'name' => 'login-button']) ?>
-					 <?= Html::a(' Forgot Password',['site/password-reset'],['class'=>'fa fa-unlock']); ?>			
+					 <?= Html::a(' Forgot Password',['site/forgot-password'],['class'=>'fa fa-unlock']); ?>			
 				<?php ActiveForm::end(); ?>
 			</div>
 														

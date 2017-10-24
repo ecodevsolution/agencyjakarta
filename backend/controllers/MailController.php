@@ -12,6 +12,7 @@ class MailController extends \yii\web\Controller
     public function actionIndex()
     {
 		$model = Timeline::find()
+				->joinWith('kontrak')
 				->all();
         return $this->render('index',[
 			'model'=>$model,
